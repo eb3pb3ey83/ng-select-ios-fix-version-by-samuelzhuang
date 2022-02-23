@@ -30,7 +30,7 @@ export class NgOptionComponent implements OnChanges, AfterViewChecked, OnDestroy
     constructor(public elementRef: ElementRef<HTMLElement>) { }
 
     get label(): string {
-        return (this.elementRef.nativeElement.textContent || '').trim();
+        return (this.elementRef.nativeElement.textContent || '')?.trim();
     }
 
     ngOnChanges(changes: SimpleChanges) {

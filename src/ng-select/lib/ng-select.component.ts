@@ -535,7 +535,7 @@ export class NgSelectComponent implements OnDestroy, OnChanges, OnInit, AfterVie
             return false;
         }
 
-        const term = this.searchTerm.toLowerCase().trim();
+        const term = this.searchTerm.toLowerCase()?.trim();
         return this.addTag &&
             (!this.itemsList.filteredItems.some(x => x.label.toLowerCase() === term) &&
                 (!this.hideSelected && this.isOpen || !this.selectedItems.some(x => x.label.toLowerCase() === term))) &&
@@ -555,14 +555,14 @@ export class NgSelectComponent implements OnDestroy, OnChanges, OnInit, AfterVie
     }
 
     onCompositionStart() {
-        console.log('start');
         this._isComposing = true;
     }
 
     onCompositionEnd(term: string) {
-        console.log('end');
+        const isIOS = navigator.userAgent.match(/iPhone/i);
+
         this._isComposing = false;
-        if (this.searchWhileComposing) {
+        if (this.searchWhileComposing && !isIOS) {
             return;
         }
 
@@ -570,8 +570,6 @@ export class NgSelectComponent implements OnDestroy, OnChanges, OnInit, AfterVie
     }
 
     filter(term: string) {
-        console.log('filter this._isComposing', this._isComposing);
-        console.log('this.searchWhileComposing :>> ', this.searchWhileComposing);
         if (this._isComposing && !this.searchWhileComposing) {
             return;
         }
@@ -947,7 +945,7 @@ export class NgSelectComponent implements OnDestroy, OnChanges, OnInit, AfterVie
     }
 
     private get _validTerm() {
-        const term = this.searchTerm && this.searchTerm.trim();
+        const term = this.searchTerm && this.searchTerm?.trim();
         return term && term.length >= this.minTermLength;
     }
 
